@@ -1,0 +1,304 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Mnifilter Learning Note | DerKi&#39;s Blog</title>
+
+<link rel="shortcut icon" href="https://DerKiChong.github.io/favicon.ico?v=1669564607804">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://DerKiChong.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            DerKi&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                            <a href="/" class="menu gt-a-link">
+                                Home
+                            </a>
+                            
+                </div>
+                
+                <div class="nav-item">
+                    
+                            <a href="/archives" class="menu gt-a-link">
+                                Archives
+                            </a>
+                            
+                </div>
+                
+                <div class="nav-item">
+                    
+                            <a href="/tags" class="menu gt-a-link">
+                                Tags
+                            </a>
+                            
+                </div>
+                
+                <div class="nav-item">
+                    
+                            <a href="/post/about" class="menu gt-a-link">
+                                About
+                            </a>
+                            
+                </div>
+                
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1669564607804"
+                action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Mnifilter Learning Note
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-11-01 ·
+                    </time>
+                    
+                        <a href="https://DerKiChong.github.io/tag/ceHx7JtcL/" class="post-tags">
+                            # minifilter
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h1 id="notice">Notice</h1>
+<p>This blog only description something hard found knowledge for me for minifilter.<br>
+So has something writing so brief,but you can easy found there online</p>
+<p>I'm suggest you can wtach the example by me if you has just learning minifilter</p>
+<p><strong>https://github.com/DerKiChong/BasicMiniFilter</strong></p>
+<p>It can help you learning it soon.</p>
+<h1 id="minifilter-overview">MiniFilter Overview</h1>
+<br />
+<h2 id="filtermanger">FilterManger</h2>
+<p>FilterManger is a component of windows,you can found it in ‪C:\Windows\System32\drivers\fltMgr.sys</p>
+<h2 id="altitude">Altitude</h2>
+<p>Minifilter driver has a concept called altitude,it determine the minifilter driver receive the I/O operation in I/O stack of windows<br>
+<img src="https://DerKiChong.github.io/post-images/1667305222431.gif" alt="" loading="lazy"></p>
+<h2 id="callback">CallBack</h2>
+<p>Minifilter has 2 series of register callback : pre and post</p>
+<ul>
+<li>
+<p>Pre callback recive the data when io request completed before</p>
+</li>
+<li>
+<p>Post callback recive the data when io request completed Later</p>
+</li>
+<li>
+<p>In PreCallBack,call order of altitude from highest to lowest</p>
+</li>
+<li>
+<p>In PostCallBack,call order of altitude from lowest to highest</p>
+</li>
+</ul>
+<h2 id="context">Context</h2>
+<p>Minifilter context just a buffer attach in object as well as minifilter context has types,The types determine by context attach object types.</p>
+<p>The purpose of the Minifilter Context is to saving and taking for data in particular object.</p>
+<ul>
+<li>
+<p>Files (Windows Vista and later)<br>
+windows will create a file context when file open.But just has only one,Not matter you open many times.And file context will not destroy instantly When the close count is zero.</p>
+</li>
+<li>
+<p>Instances<br>
+Instance is an attachment in minifilter driver as well as it is at particular altitude in the volume.<br>
+Binded in instances of context,we called it instance context</p>
+</li>
+<li>
+<p>Streams (File Control Block)<br>
+File Control Block(FCB) is a structure for description and control file.<br>
+One file correspond for one for FCB<br>
+imagine a scene:<br>
+When Windows loading file from disk to memory,File data is scatteringin physical disk's piece<br>
+So we need using the FCB to recording the map for File data and physical disk's piece.</p>
+</li>
+<li>
+<p>Stream handles (File Objects)<br>
+Binded in file objects of context,we called it Stream handles Context</p>
+</li>
+<li>
+<p>Transactions (Windows Vista and later)<br>
+I don't not what is shit for it.I can't found it's concept on online.fucking Microsoft dos.</p>
+</li>
+<li>
+<p>Volumes<br>
+I understand it as our virtual disk,just like the C:\ D:\  E:\ ....<br>
+This Context Alloc the Memory only can use NoPagePool tag</p>
+</li>
+</ul>
+<h1 id="coding">Coding</h1>
+<br />
+<h2 id="environment">Environment</h2>
+<pre><code>#include &lt;fltkernel.h&gt;
+properties -&gt; linker -&gt; input -&gt; add $(DDK_LIB_PATH)fltMgr.lib
+</code></pre>
+<h2 id="inf-file">Inf File</h2>
+<p>The major purpos for inf file in minifilter is determining the  instance for description of minifilter driver.</p>
+<p>If Inf File has not install,you can't start the minifilter only if you are writing registry for instance of minifilter by youself.</p>
+<p>The How to writing the Inf file by youself.<br>
+I usually copy the minifilter examples of Microsoft for inf file.<br>
+https://github.com/microsoft/Windows-driver-samples/tree/main/filesys/miniFilter</p>
+<p>The if you are interested in writing for inf file,Then you can see the Microsoft docs<br>
+https://learn.microsoft.com/en-us/windows-hardware/drivers/ifs/creating-an-inf-file-for-a-minifilter-driver</p>
+<p>If you want to know how to writing registry to install minifilter,you can watch the example by me.</p>
+<h2 id="startminifilter">StartMinifilter</h2>
+<p>There are two crucial functions for minifilter start</p>
+<pre><code>NTSTATUS FLTAPI FltRegisterFilter(
+  [in]  PDRIVER_OBJECT         Driver,
+  [in]  const FLT_REGISTRATION *Registration,
+  [out] PFLT_FILTER            *RetFilter
+);
+</code></pre>
+<pre><code>NTSTATUS FLTAPI FltStartFiltering(
+  [in] PFLT_FILTER Filter
+);
+</code></pre>
+<p>We can got a something simple from the above information.<br>
+We just alloc the structure for FLT_REGISTRATION type and fill it,Then stuff it to FltRegisterFilter and the FltStartFiltering.</p>
+<p>The FLT_REGISTRATION is difference in win7 and win8 later system.<br>
+The Win7 has not the member for SectionNotificationCallback<br>
+I suggest you define 2 FLT_REGISTRATION structure by youself,Then determine the structure according the difference system</p>
+<p>Watch that the definition with FLT_REGISTRATION</p>
+<pre><code>typedef struct _FLT_REGISTRATION {
+    USHORT Size;
+    USHORT Version;
+    FLT_REGISTRATION_FLAGS Flags;
+    CONST FLT_CONTEXT_REGISTRATION *ContextRegistration;
+    CONST FLT_OPERATION_REGISTRATION *OperationRegistration;
+    PFLT_FILTER_UNLOAD_CALLBACK FilterUnloadCallback;
+    PFLT_INSTANCE_SETUP_CALLBACK InstanceSetupCallback;
+    PFLT_INSTANCE_QUERY_TEARDOWN_CALLBACK InstanceQueryTeardownCallback;
+    PFLT_INSTANCE_TEARDOWN_CALLBACK InstanceTeardownStartCallback;
+    PFLT_INSTANCE_TEARDOWN_CALLBACK InstanceTeardownCompleteCallback;
+    PFLT_GENERATE_FILE_NAME GenerateFileNameCallback;
+    PFLT_NORMALIZE_NAME_COMPONENT NormalizeNameComponentCallback;
+    PFLT_NORMALIZE_CONTEXT_CLEANUP NormalizeContextCleanupCallback;
+#if FLT_MGR_LONGHORN
+    PFLT_TRANSACTION_NOTIFICATION_CALLBACK TransactionNotificationCallback;
+    PFLT_NORMALIZE_NAME_COMPONENT_EX NormalizeNameComponentExCallback;
+#endif // FLT_MGR_LONGHORN
+
+#if FLT_MGR_WIN8
+    PFLT_SECTION_CONFLICT_NOTIFICATION_CALLBACK SectionNotificationCallback;
+#endif // FLT_MGR_WIN8
+} FLT_REGISTRATION, *PFLT_REGISTRATION;
+</code></pre>
+<ul>
+<li>Notice the Version of member<br>
+It claim must be FLT_REGISTRATION_VERSION in Microsoft docs.<br>
+but when you go to definition with FLT_REGISTRATION_VERSION and you can found this<br>
+definition is FLT_REGISTRATION_VERSION_0202 or<br>
+FLT_REGISTRATION_VERSION_0203(determine for you WDK version )</li>
+</ul>
+<p>The anything member you can found their description in Microsoft docs.</p>
+<h2 id="stopminifilter">StopMinifilter</h2>
+<p>Calling the simple function just working!</p>
+<pre><code>VOID FLTAPI FltUnregisterFilter(
+  [in] PFLT_FILTER Filter
+);
+</code></pre>
+<h1 id="other">Other</h1>
+<ul>
+<li>
+<p>IRPIRP_MJ_ACQUIRE_FOR_SECTION_SYNCHRONIZATION of I/O operation code correspond the NtCreateSection,Then you can intercept CreateProcess and Dll inject in this.</p>
+</li>
+<li>
+<p>If you want to oper file in minifilter callback you must use the Fltxxx series function,such as FltWriteFile......</p>
+</li>
+</ul>
+<h1 id="thank-for">Thank for</h1>
+<p>https://community.osr.com/discussion/181155<br>
+https://learn.microsoft.com/en-us/windows-hardware/drivers/ifs/filter-manager-concepts<br>
+https://blog.csdn.net/youyou519/article/details/90768197<br>
+https://github.com/microsoft/Windows-driver-samples/tree/main/filesys/miniFilter</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first"><a href="https://github.com/DerKiChong"><img src="https://derkichong.github.io/images/github.ico" height="32px" width="32px"></a>
+&nbsp
+<a href="https://www.52pojie.cn/home.php?mod=space&uid=1682595&do=thread&view=me&from=space"><img src="https://derkichong.github.io/images/52pojie.ico" height="32px" width="32px"></a>
+&nbsp
+<a href="https://bbs.pediy.com/user-home-911831.htm"><img src="https://derkichong.github.io/images/kanxue.ico" height="32px" width="32px"></a></div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://DerKiChong.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>
